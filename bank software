@@ -1,0 +1,183 @@
+// Person mora imati Ime, prezime, oib
+// get imena, prezimena, oiba; 
+// privatni set imena, prezimena, oiba
+// Osoba neka ima instancu Account klase
+
+// BankAccount mora imati IBAN, balance
+// public get iban, balance;
+// public  withdraw, deposit,  IBAN - inicijalizaciju u konstruktoru
+
+// Banka mora sadrzavati osobe i racune te mogucnost dodavanja istih
+// vector korisnika, mogucnost dodavanja novih korisnika, provjeru IBAN-a(ne smiju 2 ista biti)
+// Mogucnost pretrazivanja korisnika i printanje IBAN-a i trenutnog stanja racuna.
+
+
+// Zadatak:
+// napraviti program pomocu kojega korisnik moze dodavati nove klijente za banku
+// Mogucnost dodavanja i skidanja sredstava sa racuna
+// Program neka ima podrsku za dodavanje beskonacno mnogo klijenata.
+
+
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+class BankAccount
+{
+public:
+	BankAccount()
+	{}
+	BankAccount(string IBANinput, float balanceInput)
+	{
+		IBAN = IBANinput;
+		balance = balanceInput;
+	}
+	
+
+	string getIBAN()
+	{
+		return IBAN;
+	}
+	float getBalance()
+	{
+		return balance;
+	}
+	void deposit(float ammount)
+	{
+		balance += ammount;
+	}
+	void withdraw(float ammount)
+	{
+		balance -= balance;
+	}
+
+private:
+	string IBAN;
+	float balance = 0.0;
+};
+
+class Person
+{
+public:
+	Person()
+	{}
+	Person(string firstNameInput, string lastNameInput, unsigned int inputOib, BankAccount* inputBankAccount)
+	{
+		firstNameInput = firstName;
+		lastNameInput = lastName;
+		inputOib = OIB;
+		inputBankAccount = account;
+	}
+
+	unsigned int getOIB()
+	{
+		return OIB;
+	}
+	string getFirstName()
+	{
+		return firstName;
+	}
+	string getLastName()
+	{
+		return lastName;
+	}
+
+	BankAccount* account;
+private:
+	
+	string firstName;
+	string lastName;
+	unsigned int OIB;
+};
+
+
+
+class Bank
+{
+public:
+	void addUser()
+	{
+		string firstName;
+		string lastName;
+		unsigned int OIB;
+		string IBAN;
+
+		cout << "Please input name of user!" << endl;
+		cin >> firstName;
+		cout << "Please input last name of user!" << endl;
+		cin >> lastName;
+		cout << "Please input OIB of user!" << endl;
+		cin >> OIB;
+		cout << "Please input IBAN of user!" << endl;
+		cin >> IBAN;
+
+		if (checkOIB)
+		{
+			users.push_back(Person(firstName, lastName, OIB,new BankAccount(IBAN,0.0)));
+		}
+    }
+	void printClientList()
+	{
+		for (auto it : users)
+		{
+			cout << "First Name:" << it.getFirstName << endl;
+			cout << "Last Name:" << it.getLastName << endl;
+			cout << "O I B" << it.getOIB << endl;
+			cout << "IBAN" << it.account->getIBAN << endl;
+		}
+	}
+	bool checkOIB(unsigned int inputOIB)
+	{
+		for (auto it : users)
+		{
+			if (inputOIB == it.getOIB())
+			{
+				return false;
+			}
+			return true;
+		}
+	}
+	void depositMoney(string IBAN,float balance)
+	{
+		for (auto it : users)
+		{
+			if (IBAN == it.account->getIBAN())
+				it.account->deposit;
+		}
+	}
+
+private:
+	vector<Person> users;
+};
+
+
+
+
+
+
+int main()
+{
+	Bank erste;
+	int choice;
+	cout << "please input your choice :" << endl;
+	cout << "'1' - add user \n" << "'2' - deposit money \n" << "'3' - withdraw money \n" << "'4' - print clients" << "'5' - exit" << endl;
+	cin >> choice;
+	if (choice == 1)
+	{
+		erste.addUser;
+	}
+	if (choice == 2)
+	{
+
+	}
+	if (choice == 4)
+	{
+		erste.printClientList;
+	}
+	if (choice == 5)
+	{
+		return 0;
+	}
+	system("pause");
+}
