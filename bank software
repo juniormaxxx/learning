@@ -116,15 +116,20 @@ public:
 		{
 			users.push_back(Person(firstName, lastName, OIB,new BankAccount(IBAN,0.0)));
 		}
+		else
+		{
+			cout << "user already exsist!" << endl;
+			return;
+		}
     }
 	void printClientList()
 	{
 		for (auto it : users)
 		{
-			cout << "First Name:" << it.getFirstName << endl;
-			cout << "Last Name:" << it.getLastName << endl;
-			cout << "O I B" << it.getOIB << endl;
-			cout << "IBAN" << it.account->getIBAN << endl;
+			cout << "First Name:" << it.getFirstName() << endl;
+			cout << "Last Name:" << it.getLastName() << endl;
+			cout << "O I B" << it.getOIB() << endl;
+			cout << "IBAN" << it.account->getIBAN() << endl;
 		}
 	}
 	bool checkOIB(unsigned int inputOIB)
@@ -138,12 +143,12 @@ public:
 			return true;
 		}
 	}
-	void depositMoney(string IBAN,float balance)
+	void depositMoney(string nIBAN,float ammount)
 	{
 		for (auto it : users)
 		{
-			if (IBAN == it.account->getIBAN())
-				it.account->deposit;
+			if (nIBAN == it.account->getIBAN())
+				it.account->deposit(ammount);
 		}
 	}
 
@@ -160,24 +165,40 @@ int main()
 {
 	Bank erste;
 	int choice;
+	string nIBAN;
+	float ammount;
 	cout << "please input your choice :" << endl;
 	cout << "'1' - add user \n" << "'2' - deposit money \n" << "'3' - withdraw money \n" << "'4' - print clients" << "'5' - exit" << endl;
 	cin >> choice;
 	if (choice == 1)
 	{
-		erste.addUser;
+		erste.addUser();
 	}
 	if (choice == 2)
 	{
+		cout << "input user IBAN" << endl;
+		cin >> nIBAN;
+		cout << " how much you want to deposit" << endl;
+		cin >> ammount;
+		erste.depositMoney(nIBAN, ammount);
 
+	}
+	if (choice == 3)
+	{
+		cout << "input user IBAN" << endl;
+		cin >> nIBAN;
+		cout << " how much you want to deposit" << endl;
+		cin >> ammount;
+	
 	}
 	if (choice == 4)
 	{
-		erste.printClientList;
+		erste.printClientList();
 	}
 	if (choice == 5)
 	{
 		return 0;
 	}
 	system("pause");
+	return 0;
 }
