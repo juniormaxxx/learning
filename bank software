@@ -33,7 +33,7 @@ public:
 		IBAN = IBANinput;
 		balance = balanceInput;
 	}
-	
+
 
 	string getIBAN()
 	{
@@ -85,7 +85,7 @@ public:
 
 	BankAccount* account;
 private:
-	
+
 	string firstName;
 	string lastName;
 	unsigned int OIB;
@@ -100,7 +100,7 @@ public:
 	{
 		string firstName;
 		string lastName;
-		unsigned int OIB;
+		unsigned int OIB;                         //                    radi sa stringovima
 		string IBAN;
 
 		cout << "Please input name of user!" << endl;
@@ -112,48 +112,48 @@ public:
 		cout << "Please input IBAN of user!" << endl;
 		cin >> IBAN;
 
-		if (checkOIB)
+		if (checkOIB(OIB))
 		{
-			users.push_back(Person(firstName, lastName, OIB,new BankAccount(IBAN,0.0)));
+			users.push_back(new Person(firstName, lastName, OIB, new BankAccount(IBAN, 0.0)));      // dodaj i new za novu instsncu klase person kada se generira novi lik ubank(poput new bankakaunt)
 		}
 		else
 		{
 			cout << "user already exsist!" << endl;
 			return;
 		}
-    }
+	}
 	void printClientList()
 	{
 		for (auto it : users)
 		{
-			cout << "First Name:" << it.getFirstName() << endl;
-			cout << "Last Name:" << it.getLastName() << endl;
-			cout << "O I B" << it.getOIB() << endl;
-			cout << "IBAN" << it.account->getIBAN() << endl;
+			cout << "First Name:" << it->getFirstName() << endl;                 // -> koristis ovaj operator jer se sve dovlači s hipe memorije.
+			cout << "Last Name:" << it->getLastName() << endl;
+			cout << "O I B" << it->getOIB() << endl;
+			cout << "IBAN" << it->account->getIBAN() << endl;
 		}
 	}
 	bool checkOIB(unsigned int inputOIB)
 	{
 		for (auto it : users)
 		{
-			if (inputOIB == it.getOIB())
+			if (inputOIB == it->getOIB())
 			{
 				return false;
 			}
 			return true;
 		}
 	}
-	void depositMoney(string nIBAN,float ammount)
+	void depositMoney(string nIBAN, float ammount)
 	{
 		for (auto it : users)
 		{
-			if (nIBAN == it.account->getIBAN())
-				it.account->deposit(ammount);
+			if (nIBAN == it->account->getIBAN())
+				it->account->deposit(ammount);
 		}
 	}
 
 private:
-	vector<Person> users;
+	vector<Person*> users;
 };
 
 
@@ -189,7 +189,7 @@ int main()
 		cin >> nIBAN;
 		cout << " how much you want to deposit" << endl;
 		cin >> ammount;
-	
+
 	}
 	if (choice == 4)
 	{
