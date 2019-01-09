@@ -27,6 +27,7 @@ unsigned int CreateShader(std::string& vertexShader, std::string& pixelShader)
 
 	return program;
 }
+//open gl
 
 int main(void)
 {
